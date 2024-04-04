@@ -1,4 +1,4 @@
-package main
+package limiters
 
 import (
 	"testing"
@@ -7,7 +7,8 @@ import (
 )
 
 func TestFixedWindowCounter(t *testing.T) {
-	rl := NewInMemoryFixedWindowCounter(1)
+	adapter := NewInMemoryFixedWindowCounter(1)
+	rl := NewLimiter(adapter)
 	require.True(t, rl.IsAllowed("client1"))
 	require.True(t, rl.IsAllowed("client1"))
 	require.False(t, rl.IsAllowed("client1"))
